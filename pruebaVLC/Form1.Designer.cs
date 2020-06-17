@@ -42,15 +42,26 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btn_subirImg = new System.Windows.Forms.Button();
+            this.txt_usrFTP = new System.Windows.Forms.TextBox();
+            this.txt_urlFTP = new System.Windows.Forms.TextBox();
+            this.txt_passFTP = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txt_rutaRemota = new System.Windows.Forms.TextBox();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // txt_ruta
             // 
-            this.txt_ruta.Location = new System.Drawing.Point(160, 334);
+            this.txt_ruta.Location = new System.Drawing.Point(343, 341);
             this.txt_ruta.Name = "txt_ruta";
-            this.txt_ruta.Size = new System.Drawing.Size(335, 20);
+            this.txt_ruta.Size = new System.Drawing.Size(250, 20);
             this.txt_ruta.TabIndex = 1;
-            this.txt_ruta.Text = "C:\\Users\\LIVE\\Desktop";
+            this.txt_ruta.Text = "C:\\Users\\jgomez\\Desktop";
             // 
             // txt_password
             // 
@@ -87,9 +98,9 @@
             // 
             // btn_captura
             // 
-            this.btn_captura.Location = new System.Drawing.Point(501, 326);
+            this.btn_captura.Location = new System.Drawing.Point(509, 368);
             this.btn_captura.Name = "btn_captura";
-            this.btn_captura.Size = new System.Drawing.Size(99, 28);
+            this.btn_captura.Size = new System.Drawing.Size(84, 28);
             this.btn_captura.TabIndex = 6;
             this.btn_captura.Text = "Tomar captura";
             this.btn_captura.UseVisualStyleBackColor = true;
@@ -125,11 +136,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(157, 318);
+            this.label2.Location = new System.Drawing.Point(340, 322);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 13);
+            this.label2.Size = new System.Drawing.Size(58, 13);
             this.label2.TabIndex = 10;
-            this.label2.Text = "Ruta imagen";
+            this.label2.Text = "Ruta local:";
             // 
             // label3
             // 
@@ -166,11 +177,102 @@
             this.panel1.Size = new System.Drawing.Size(440, 244);
             this.panel1.TabIndex = 14;
             // 
+            // btn_subirImg
+            // 
+            this.btn_subirImg.Location = new System.Drawing.Point(223, 58);
+            this.btn_subirImg.Name = "btn_subirImg";
+            this.btn_subirImg.Size = new System.Drawing.Size(75, 28);
+            this.btn_subirImg.TabIndex = 15;
+            this.btn_subirImg.Text = "Subir";
+            this.btn_subirImg.UseVisualStyleBackColor = true;
+            this.btn_subirImg.Click += new System.EventHandler(this.btn_subirImg_Click);
+            // 
+            // txt_usrFTP
+            // 
+            this.txt_usrFTP.Location = new System.Drawing.Point(104, 37);
+            this.txt_usrFTP.Name = "txt_usrFTP";
+            this.txt_usrFTP.Size = new System.Drawing.Size(100, 20);
+            this.txt_usrFTP.TabIndex = 16;
+            // 
+            // txt_urlFTP
+            // 
+            this.txt_urlFTP.Location = new System.Drawing.Point(104, 11);
+            this.txt_urlFTP.Name = "txt_urlFTP";
+            this.txt_urlFTP.Size = new System.Drawing.Size(100, 20);
+            this.txt_urlFTP.TabIndex = 17;
+            // 
+            // txt_passFTP
+            // 
+            this.txt_passFTP.Location = new System.Drawing.Point(104, 63);
+            this.txt_passFTP.Name = "txt_passFTP";
+            this.txt_passFTP.Size = new System.Drawing.Size(100, 20);
+            this.txt_passFTP.TabIndex = 18;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(26, 40);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(72, 13);
+            this.label6.TabIndex = 20;
+            this.label6.Text = "Usuario FTP :";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(8, 66);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(90, 13);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Contraseña FTP :";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(52, 14);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(46, 13);
+            this.label8.TabIndex = 22;
+            this.label8.Text = "IP FTP :";
+            // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.btn_subirImg);
+            this.panel2.Controls.Add(this.label8);
+            this.panel2.Controls.Add(this.label7);
+            this.panel2.Controls.Add(this.txt_usrFTP);
+            this.panel2.Controls.Add(this.label6);
+            this.panel2.Controls.Add(this.txt_urlFTP);
+            this.panel2.Controls.Add(this.txt_passFTP);
+            this.panel2.Location = new System.Drawing.Point(22, 331);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(312, 100);
+            this.panel2.TabIndex = 23;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(340, 391);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(68, 13);
+            this.label9.TabIndex = 25;
+            this.label9.Text = "Ruta remota:";
+            // 
+            // txt_rutaRemota
+            // 
+            this.txt_rutaRemota.Location = new System.Drawing.Point(343, 410);
+            this.txt_rutaRemota.Name = "txt_rutaRemota";
+            this.txt_rutaRemota.Size = new System.Drawing.Size(250, 20);
+            this.txt_rutaRemota.TabIndex = 24;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 366);
+            this.ClientSize = new System.Drawing.Size(628, 445);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.txt_rutaRemota);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -185,8 +287,11 @@
             this.Controls.Add(this.txt_user);
             this.Controls.Add(this.txt_password);
             this.Controls.Add(this.txt_ruta);
+            this.Controls.Add(this.panel2);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -207,6 +312,16 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btn_subirImg;
+        private System.Windows.Forms.TextBox txt_usrFTP;
+        private System.Windows.Forms.TextBox txt_urlFTP;
+        private System.Windows.Forms.TextBox txt_passFTP;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txt_rutaRemota;
     }
 }
 

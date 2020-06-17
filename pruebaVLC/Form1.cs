@@ -13,19 +13,20 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.IO;
 using Vlc.DotNet.Forms;
+using System.Net;
 /*Agregar referencias a servicios:
-    https://www.onvif.org/ver10/device/wsdl/devicemgmt.wsdl (Devide)
-    https://www.onvif.org/ver20/media/wsdl/media.wsdl (Media)
+https://www.onvif.org/ver10/device/wsdl/devicemgmt.wsdl (Devide)
+https://www.onvif.org/ver20/media/wsdl/media.wsdl (Media)
 
 importar paquetes nuget
-    Vlc.DotNet.Forms
-    (Vlc.DotNet.Core y Vlc.DotNet.Core.Interops)
+Vlc.DotNet.Forms
+(Vlc.DotNet.Core y Vlc.DotNet.Core.Interops)
 
 copiar los dll en debug
-    axvlc.dll
-    libvlc.dll
-    libvlccore.dll
-    plugins(carpeta)
+axvlc.dll
+libvlc.dll
+libvlccore.dll
+plugins(carpeta)
 */
 
 namespace pruebaVLC
@@ -131,6 +132,48 @@ namespace pruebaVLC
             }
         }
 
-       
+        private void btn_subirImg_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+
+                string host = txt_urlFTP.Text;//"192.168.100.8"
+                string user = txt_usrFTP.Text;
+                string pass = txt_passFTP.Text;
+                string fileName = txt_ruta.Text + @"\img.jpg";
+                string folderName = txt_rutaRemota.Text;
+
+
+                FtpWebRequest request;
+
+                string absoluteFileName = Path.GetFileName(fileName);
+
+                request = WebRequest.Create(new Uri(string.Format(@"ftp://{0}/{1}/{2}", host, folderName, absoluteFileName))) as FtpWebRequest;
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.UseBinary = true;
+                request.UsePassive = true;
+                request.KeepAlive = true;
+                request.Credentials = new NetworkCredential(user, pass);
+                request.ConnectionGroupName = "group";
+
+                using (FileStream fs = File.OpenRead(fileName))
+                {
+                    byte[] buffer = new byte[fs.Length];
+                    fs.Read(buffer, 0, buffer.Length);
+                    fs.Close();
+                    Stream requestStream = request.GetRequestStream();
+                    requestStream.Write(buffer, 0, buffer.Length);
+                    requestStream.Flush();
+                    requestStream.Close();
+                }
+
+                MessageBox.Show("Se ha enviado la imagen al servidor");
+
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
