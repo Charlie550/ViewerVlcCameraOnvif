@@ -14,6 +14,8 @@ using System.ServiceModel.Channels;
 using System.IO;
 using Vlc.DotNet.Forms;
 using System.Net;
+using System.Collections.Specialized;
+using System.Net.Http;
 /*Agregar referencias a servicios:
 https://www.onvif.org/ver10/device/wsdl/devicemgmt.wsdl (Devide)
 https://www.onvif.org/ver20/media/wsdl/media.wsdl (Media)
@@ -134,7 +136,8 @@ namespace pruebaVLC
 
         private void btn_subirImg_Click(object sender, EventArgs e)
         {
-
+            /*
+            //Codigo de muestra para subir archivos por FTP
             try
             {
 
@@ -173,7 +176,25 @@ namespace pruebaVLC
             }catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }*/
+            
+
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    client.UploadFile(txt_rutaRemota.Text, txt_ruta.Text + @"\img.jpg");
+                }
+
+                MessageBox.Show("Se ha subido la imagen al servidor");
+
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
+
         }
+
+
     }
 }

@@ -57,9 +57,9 @@
             // 
             // txt_ruta
             // 
-            this.txt_ruta.Location = new System.Drawing.Point(343, 341);
+            this.txt_ruta.Location = new System.Drawing.Point(250, 341);
             this.txt_ruta.Name = "txt_ruta";
-            this.txt_ruta.Size = new System.Drawing.Size(250, 20);
+            this.txt_ruta.Size = new System.Drawing.Size(253, 20);
             this.txt_ruta.TabIndex = 1;
             this.txt_ruta.Text = "C:\\Users\\jgomez\\Desktop";
             // 
@@ -98,7 +98,7 @@
             // 
             // btn_captura
             // 
-            this.btn_captura.Location = new System.Drawing.Point(509, 368);
+            this.btn_captura.Location = new System.Drawing.Point(509, 333);
             this.btn_captura.Name = "btn_captura";
             this.btn_captura.Size = new System.Drawing.Size(84, 28);
             this.btn_captura.TabIndex = 6;
@@ -136,7 +136,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(340, 322);
+            this.label2.Location = new System.Drawing.Point(247, 325);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(58, 13);
             this.label2.TabIndex = 10;
@@ -179,9 +179,9 @@
             // 
             // btn_subirImg
             // 
-            this.btn_subirImg.Location = new System.Drawing.Point(223, 58);
+            this.btn_subirImg.Location = new System.Drawing.Point(509, 402);
             this.btn_subirImg.Name = "btn_subirImg";
-            this.btn_subirImg.Size = new System.Drawing.Size(75, 28);
+            this.btn_subirImg.Size = new System.Drawing.Size(84, 27);
             this.btn_subirImg.TabIndex = 15;
             this.btn_subirImg.Text = "Subir";
             this.btn_subirImg.UseVisualStyleBackColor = true;
@@ -189,6 +189,7 @@
             // 
             // txt_usrFTP
             // 
+            this.txt_usrFTP.Enabled = false;
             this.txt_usrFTP.Location = new System.Drawing.Point(104, 37);
             this.txt_usrFTP.Name = "txt_usrFTP";
             this.txt_usrFTP.Size = new System.Drawing.Size(100, 20);
@@ -196,6 +197,7 @@
             // 
             // txt_urlFTP
             // 
+            this.txt_urlFTP.Enabled = false;
             this.txt_urlFTP.Location = new System.Drawing.Point(104, 11);
             this.txt_urlFTP.Name = "txt_urlFTP";
             this.txt_urlFTP.Size = new System.Drawing.Size(100, 20);
@@ -203,6 +205,7 @@
             // 
             // txt_passFTP
             // 
+            this.txt_passFTP.Enabled = false;
             this.txt_passFTP.Location = new System.Drawing.Point(104, 63);
             this.txt_passFTP.Name = "txt_passFTP";
             this.txt_passFTP.Size = new System.Drawing.Size(100, 20);
@@ -238,7 +241,6 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.btn_subirImg);
             this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.label7);
             this.panel2.Controls.Add(this.txt_usrFTP);
@@ -247,30 +249,32 @@
             this.panel2.Controls.Add(this.txt_passFTP);
             this.panel2.Location = new System.Drawing.Point(22, 331);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(312, 100);
+            this.panel2.Size = new System.Drawing.Size(216, 100);
             this.panel2.TabIndex = 23;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(340, 391);
+            this.label9.Location = new System.Drawing.Point(247, 392);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(68, 13);
+            this.label9.Size = new System.Drawing.Size(168, 13);
             this.label9.TabIndex = 25;
-            this.label9.Text = "Ruta remota:";
+            this.label9.Text = "Url del metodo Post en el servidor:";
             // 
             // txt_rutaRemota
             // 
-            this.txt_rutaRemota.Location = new System.Drawing.Point(343, 410);
+            this.txt_rutaRemota.Location = new System.Drawing.Point(250, 408);
             this.txt_rutaRemota.Name = "txt_rutaRemota";
-            this.txt_rutaRemota.Size = new System.Drawing.Size(250, 20);
+            this.txt_rutaRemota.Size = new System.Drawing.Size(253, 20);
             this.txt_rutaRemota.TabIndex = 24;
+            this.txt_rutaRemota.Text = "http://localhost:60673/Home/SubirArchivo";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 445);
+            this.Controls.Add(this.btn_subirImg);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txt_rutaRemota);
             this.Controls.Add(this.panel1);
