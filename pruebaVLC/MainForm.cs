@@ -16,7 +16,7 @@ using Vlc.DotNet.Forms;
 using System.Net;
 using System.Collections.Specialized;
 using System.Net.Http;
-
+using System.Threading;
 /*Agregar referencias a servicios:
 https://www.onvif.org/ver10/device/wsdl/devicemgmt.wsdl (Devide)
 https://www.onvif.org/ver20/media/wsdl/media.wsdl (Media)
@@ -32,10 +32,13 @@ libvlccore.dll
 plugins(carpeta)
 */
 
+
+
 namespace pruebaVLC
 {
-    public partial class Form1 : Form
-    {
+    public partial class MainForm : Form
+    {        
+        Loading loading;
 
         VlcControl vlcPlayer;
 
@@ -43,7 +46,7 @@ namespace pruebaVLC
         Media.Media2Client media;
         Media.MediaProfile[] profiles;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
 
@@ -55,17 +58,47 @@ namespace pruebaVLC
             var libDirectory = new DirectoryInfo(currentDirectory);
             vlcPlayer.BeginInit();
             vlcPlayer.VlcLibDirectory = libDirectory;
-            vlcPlayer.Dock = DockStyle.Fill;            
+            vlcPlayer.Dock = DockStyle.Fill;
             vlcPlayer.EndInit();
-            panel1.Controls.Add(vlcPlayer);
+            //panel1.Controls.Add(vlcPlayer);
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            show();
+            button1.Enabled = false;
+            Task oTask = new Task(TomarCaptura);
+            oTask.Start();
+            await oTask;
+            hide();
+            button1.Enabled = true;
         }
 
 
-        private void btn_conectar_Click(object sender, EventArgs e)
+        public void TomarCaptura()
         {
+
+            //--------------------- datos de conexion ---------------------
+
+            //string url = "172.16.0.155";
+            string url = "10.64.125.113";
+
+            string user, password;
+            //user = "Contel";
+            //password = "Contel123.";
+            user = "Bascula";
+            password = "Aamexico20.";
+
+            string ruta = @"C:/Users/jgomez/Desktop";//guardar las imagenes
+
+            string urlPostMethod = "http://localhost:60673/Home/SubirArchivo";//metodo en el sistema web que recibe la imagen por post
+
+            //--------------------------------------------------------------
+
+            List<string> perfiles = new List<string>();
             deviceUri = new UriBuilder("http:/onvif/device_service");
 
-            string[] addr = txt_url.Text.Split(':');
+            string[] addr = url.Split(':');
             deviceUri.Host = addr[0];
             if (addr.Length == 2)
                 deviceUri.Port = Convert.ToInt16(addr[1]);
@@ -84,8 +117,8 @@ namespace pruebaVLC
                 if (xmedia != null)
                 {
                     media = new Media.Media2Client(binding, new EndpointAddress(xmedia.XAddr));
-                    media.ClientCredentials.HttpDigest.ClientCredential.UserName = txt_user.Text;
-                    media.ClientCredentials.HttpDigest.ClientCredential.Password = txt_password.Text;
+                    media.ClientCredentials.HttpDigest.ClientCredential.UserName = user;
+                    media.ClientCredentials.HttpDigest.ClientCredential.Password = password;
                     media.ClientCredentials.HttpDigest.AllowedImpersonationLevel = System.Security.Principal.TokenImpersonationLevel.Impersonation;
 
                     try
@@ -94,108 +127,84 @@ namespace pruebaVLC
                         if (profiles != null)
                         {
                             foreach (var p in profiles)
-                            {
-                                listBox1.Items.Add(p.Name);
+                            {                                
+                                perfiles.Add(p.Name);
                             }
                         }
                     }
                     catch (System.ServiceModel.ProtocolException ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show("Error al obtener los perfiles del dispositivo: " + ex.Message);
+                        return;
                     }
                 }
             }
             catch (System.ServiceModel.EndpointNotFoundException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Error al intentar conectar con el dispositivo: " + ex.Message);
+                return;
             }
-        }
 
-        private void btn_captura_Click(object sender, EventArgs e)
-        {
-            vlcPlayer.TakeSnapshot(txt_ruta.Text + "/img.jpg");
-        }      
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (profiles != null && listBox1.SelectedIndex >= 0)
+
+
+            if (profiles != null && perfiles.Count >= 0)
             {
-                UriBuilder uri = new UriBuilder(media.GetStreamUri("RtspOverHttp", profiles[listBox1.SelectedIndex].token));
+                UriBuilder uri = new UriBuilder(media.GetStreamUri("RtspOverHttp", profiles[0].token));
                 uri.Host = deviceUri.Host;
                 uri.Port = deviceUri.Port;
                 uri.Scheme = "rtsp";
-                txt_estado.Text = uri.Path;
+                //txt_estado.Text = uri.Path;
 
-                string[] options = { ":rtsp-http", ":rtsp-http-port=" + uri.Port, ":rtsp-user=" + txt_user.Text, ":rtsp-pwd=" + txt_password.Text, };
-
-
+                string[] options = { ":rtsp-http", ":rtsp-http-port=" + uri.Port, ":rtsp-user=" + user, ":rtsp-pwd=" + password, };
 
                 vlcPlayer.VlcMediaPlayer.Play(uri.Uri, options);
-
             }
-        }
 
-        private void btn_subirImg_Click(object sender, EventArgs e)
-        {
-            /*
-            //Codigo de muestra para subir archivos por FTP
-            try
-            {
-
-                string host = txt_urlFTP.Text;//"192.168.100.8"
-                string user = txt_usrFTP.Text;
-                string pass = txt_passFTP.Text;
-                string fileName = txt_ruta.Text + @"\img.jpg";
-                string folderName = txt_rutaRemota.Text;
-
-
-                FtpWebRequest request;
-
-                string absoluteFileName = Path.GetFileName(fileName);
-
-                request = WebRequest.Create(new Uri(string.Format(@"ftp://{0}/{1}/{2}", host, folderName, absoluteFileName))) as FtpWebRequest;
-                request.Method = WebRequestMethods.Ftp.UploadFile;
-                request.UseBinary = true;
-                request.UsePassive = true;
-                request.KeepAlive = true;
-                request.Credentials = new NetworkCredential(user, pass);
-                request.ConnectionGroupName = "group";
-
-                using (FileStream fs = File.OpenRead(fileName))
-                {
-                    byte[] buffer = new byte[fs.Length];
-                    fs.Read(buffer, 0, buffer.Length);
-                    fs.Close();
-                    Stream requestStream = request.GetRequestStream();
-                    requestStream.Write(buffer, 0, buffer.Length);
-                    requestStream.Flush();
-                    requestStream.Close();
-                }
-
-                MessageBox.Show("Se ha enviado la imagen al servidor");
-
-            }catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }*/
             
+
+            string[] imgList = Directory.GetFiles(ruta,"*.jpg");
+            int noImagenes = imgList.Length;
+            int noImagenesN;
+            do
+            {
+                vlcPlayer.TakeSnapshot(ruta + "/img" + noImagenes + ".jpg");
+                imgList = Directory.GetFiles(ruta, "*.jpg");
+                noImagenesN = imgList.Length;
+
+            } while (noImagenesN <= noImagenes);
+
+
 
             try
             {
                 using (WebClient client = new WebClient())
                 {
-                    client.UploadFile(txt_rutaRemota.Text, txt_ruta.Text + @"\img.jpg");
+                    client.UploadFile(urlPostMethod, ruta + @"\img.jpg");
                 }
 
                 MessageBox.Show("Se ha subido la imagen al servidor");
 
-            }catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al intentar mandar la imagen al servidor: " + ex.Message);
+                return;
+            }
         }
 
+        public void show()
+        {
+            loading = new Loading();
+            loading.Show();
+        }
 
+        public void hide()
+        {
+            if (loading != null)
+                loading.Close();
+        }
+
+        
     }
 }

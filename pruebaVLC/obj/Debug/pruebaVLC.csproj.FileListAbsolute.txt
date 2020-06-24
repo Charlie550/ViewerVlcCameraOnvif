@@ -26,3 +26,6 @@ C:\Users\jgomez\Desktop\pruebaVLC\pruebaVLC\obj\Debug\pruebaVLC.csproj.CoreCompi
 C:\Users\jgomez\Desktop\pruebaVLC\pruebaVLC\obj\Debug\pruebaVLC.csproj.CopyComplete
 C:\Users\jgomez\Desktop\pruebaVLC\pruebaVLC\obj\Debug\pruebaVLC.exe
 C:\Users\jgomez\Desktop\pruebaVLC\pruebaVLC\obj\Debug\pruebaVLC.pdb
+C:\Users\jgomez\Desktop\pruebaVLC\pruebaVLC\bin\Debug\bin\Debug\cargando.gif
+C:\Users\jgomez\Desktop\pruebaVLC\pruebaVLC\obj\Debug\pruebaVLC.Loading.resources
+C:\Users\jgomez\Desktop\pruebaVLC\pruebaVLC\obj\Debug\pruebaVLC.MainForm.resources
